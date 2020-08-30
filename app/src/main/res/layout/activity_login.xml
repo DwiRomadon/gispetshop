@@ -57,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dip"
+                    android:id="@+id/edtUsername"
                     android:drawableTint="@color/colorPrimaryDark"
                     android:drawableLeft="@drawable/ic_username"
                     android:background="@drawable/rounded_edittext"
@@ -67,6 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dip"
+                    android:id="@+id/edtPassword"
                     android:layout_marginTop="15dp"
                     android:drawableTint="@color/colorPrimaryDark"
                     android:drawableLeft="@drawable/ic_lock"
@@ -78,6 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Login"
+                    android:id="@+id/btnLogin"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/rounded_button"
                     android:textColor="@color/colorPrimary"/>
