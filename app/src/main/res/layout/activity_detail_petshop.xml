@@ -34,7 +34,7 @@
         android:tint="#FFFFFF"
         android:src="@drawable/ic_add"
         android:contentDescription="Tambah Gambar"/>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -55,6 +55,17 @@
                 android:layout_marginLeft="16dp"
                 android:layout_gravity="center">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/username_text_input_layout"
                     android:layout_width="match_parent"
@@ -69,7 +80,41 @@
                         android:ems="10"
                         android:hint="Nama Petshop" />
                 </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/mapbox_blue"
+                    android:tint="#FFFFFF"
+                    android:src="@drawable/ic_edit"
+                    android:id="@+id/fabButtonEditNama"
+                    app:fabSize="mini"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorGreen"
+                    android:tint="#FFFFFF"
+                    android:src="@drawable/ic_check"
+                    android:id="@+id/fabButtonSimpanNama"
+                    app:fabSize="mini"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -84,7 +129,42 @@
                         android:hint="Alamat Petshop" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+            </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/mapbox_blue"
+                    android:tint="#FFFFFF"
+                    android:src="@drawable/ic_edit"
+                    app:fabSize="mini"
+                    android:layout_gravity="center"
+                    android:id="@+id/fabButtonEditAlamat"
+                    android:layout_marginLeft="5dp"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorGreen"
+                    android:tint="#FFFFFF"
+                    android:src="@drawable/ic_check"
+                    android:id="@+id/fabButtonSimpanAlamat"
+                    app:fabSize="mini"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+            <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
@@ -98,26 +178,86 @@
                         android:hint="Nomor Telphone" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+            </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/mapbox_blue"
+                    android:tint="#FFFFFF"
+                    android:src="@drawable/ic_edit"
+                    app:fabSize="mini"
+                    android:id="@+id/fabButtonEditNotelp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorGreen"
+                    android:tint="#FFFFFF"
+                    android:src="@drawable/ic_check"
+                    android:id="@+id/fabButtonSimpanNotelp"
+                    app:fabSize="mini"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Jam Buka"/>
-                <Spinner
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/jamBuka"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.9dp"
-                    android:layout_marginTop="3dp"
-                    android:background="#737373"/>
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <Spinner
+                            android:id="@+id/jamBuka"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.9dp"
+                            android:layout_marginTop="3dp"
+                            android:background="#737373" />
+                    </LinearLayout>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/mapbox_blue"
+                        android:tint="#FFFFFF"
+                        app:fabSize="mini"
+                        android:id="@+id/fabUbahJamBuka"
+                        android:src="@drawable/ic_edit"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Produk"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
@@ -128,12 +268,43 @@
                     android:layout_height="0.9dp"
                     android:layout_marginTop="3dp"
                     android:background="#737373"/>
+            </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/mapbox_blue"
+                    android:tint="#FFFFFF"
+                    app:fabSize="mini"
+                    android:id="@+id/fabEditProduk"
+                    android:src="@drawable/ic_edit"
+                    android:layout_marginLeft="5dp"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/mapbox_blue"
+                    android:id="@+id/floatingAddProduk"
+                    android:tint="#FFFFFF"
+                    app:fabSize="mini"
+                    android:src="@drawable/ic_add"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Jasa"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
@@ -144,6 +315,26 @@
                     android:layout_height="0.9dp"
                     android:layout_marginTop="3dp"
                     android:background="#737373"/>
+            </LinearLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/mapbox_blue"
+                    android:tint="#FFFFFF"
+                    app:fabSize="mini"
+                    android:src="@drawable/ic_edit"
+                    android:id="@+id/fabEditJasa"
+                    android:layout_marginLeft="5dp"/>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/mapbox_blue"
+                    android:tint="#FFFFFF"
+                    android:id="@+id/fabTambahJasa"
+                    app:fabSize="mini"
+                    android:src="@drawable/ic_add"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
 
             </LinearLayout>
         </TableLayout>

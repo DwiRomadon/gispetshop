@@ -10,7 +10,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-feature android:name="android.hardware.location.gps"/>
+
+    <uses-feature android:name="android.hardware.location.gps" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +24,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".pengguna.Maps"></activity>
+        <activity android:name=".admin.ListJasa"></activity>
+        <activity android:name=".admin.ListProduk" />
+        <activity android:name=".users.RegistrasiActivity" />
+        <activity android:name=".pengguna.Maps" />
         <activity android:name=".pengguna.History" />
         <activity android:name=".pengguna.DetailPetshopPengguna" />
         <activity
@@ -35,6 +41,7 @@
         <activity android:name=".admin.Produk" />
         <activity android:name=".admin.JamBuka" />
         <activity android:name=".admin.InputData" />
+        <activity android:name=".admin.UbahJamBuka" />
         <activity android:name=".pengguna.HomePengguna" />
         <activity android:name=".admin.HomeAdmin" />
         <activity android:name=".users.LoginActivity">

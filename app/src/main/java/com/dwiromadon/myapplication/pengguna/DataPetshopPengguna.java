@@ -38,7 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -123,7 +125,7 @@ public class DataPetshopPengguna extends AppCompatActivity implements
                                     final ModelPetshop petShop = new ModelPetshop();
                                     final String _id = jsonObject.getString("_id");
                                     final String namaPetshop = jsonObject.getString("namaPetshop");
-                                    final String alamat = jsonObject.getString("alamat");
+//                                    final String alamat = jsonObject.getString("alamat");
                                     final String notelp = jsonObject.getString("noTelp");
                                     final String arrGambar = jsonObject.getString("gambar");
                                     final String arrJamBuka = jsonObject.getString("jamBuka");
@@ -359,6 +361,7 @@ public class DataPetshopPengguna extends AppCompatActivity implements
     public void inputHistori(String _id){
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("id", _id);
+        params.put("macAddress", getMacAddr());
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BaseURL.inputHistory, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -383,5 +386,31 @@ public class DataPetshopPengguna extends AppCompatActivity implements
             }
         });
         mRequestQueue.add(req);
+    }
+
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+            //handle exception
+        }
+        return "";
     }
 }

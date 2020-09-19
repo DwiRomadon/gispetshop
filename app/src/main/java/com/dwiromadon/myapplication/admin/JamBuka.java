@@ -37,7 +37,7 @@ public class JamBuka extends AppCompatActivity {
     private RequestQueue mRequestQueue;
     ProgressDialog pDialog;
 
-    String _id;
+    String _id, namaPetshop, idUser;
     Intent i;
 
     @Override
@@ -60,9 +60,11 @@ public class JamBuka extends AppCompatActivity {
 
         i = getIntent();
         _id = i.getStringExtra("_id");
+        namaPetshop = i.getStringExtra("namaPetshop");
+        idUser = i.getStringExtra("idUser");
 
         btnNext = (Button) findViewById(R.id.btnSubmit);
-
+        btnNext.setText("Next");
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +116,8 @@ public class JamBuka extends AppCompatActivity {
                             if(status == false){
                                 Intent i = new Intent(JamBuka.this, Produk.class);
                                 i.putExtra("_id", _id);
+                                i.putExtra("idUser", idUser);
+                                i.putExtra("namaPetshop", namaPetshop);
                                 startActivity(i);
                                 finish();
                             }else {

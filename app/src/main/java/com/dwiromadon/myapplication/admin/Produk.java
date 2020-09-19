@@ -29,7 +29,7 @@ import org.json.JSONObject;
 
 public class Produk extends AppCompatActivity {
 
-    String _id;
+    String _id, namaPetshop, idUser;
     Intent i;
 
     private RequestQueue mRequestQueue;
@@ -49,6 +49,8 @@ public class Produk extends AppCompatActivity {
 
         i = getIntent();
         _id = i.getStringExtra("_id");
+        namaPetshop = i.getStringExtra("namaPetshop");
+        idUser = i.getStringExtra("idUser");
 
         edtNamaProduk = (EditText) findViewById(R.id.edtNamaProduk);
         edtHargaProduk = (EditText) findViewById(R.id.edtHarga);
@@ -109,6 +111,8 @@ public class Produk extends AppCompatActivity {
                                             public void onClick(DialogInterface dialog, int id) {
                                                 Intent i = new Intent(Produk.this, Jasa.class);
                                                 i.putExtra("_id", _id);
+                                                i.putExtra("idUser", idUser);
+                                                i.putExtra("namaPetshop", namaPetshop);
                                                 startActivity(i);
                                                 finish();
                                             }

@@ -46,4 +46,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:11.0.1'
 
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0'
+
+    implementation 'com.vistrav:pop:2.3'
 }

@@ -25,6 +25,7 @@
             android:id="@+id/edtSearch"
             android:layout_weight="1"
             android:inputType="number"
+            android:digits="0123456789.,"
             android:drawableTint="@color/colorPrimaryDark"
             android:background="@drawable/rounded_background"
             android:drawableLeft="@drawable/ic_search"
@@ -47,7 +48,7 @@
         android:layout_height="683dp"
         mapbox:mapbox_cameraTargetLat="-5.397140"
         mapbox:mapbox_cameraTargetLng="105.266792"
-        mapbox:mapbox_cameraZoom="11"
+        mapbox:mapbox_cameraZoom="10"
         android:layout_below="@+id/linear"
         android:layout_marginTop="-2dp" >
 

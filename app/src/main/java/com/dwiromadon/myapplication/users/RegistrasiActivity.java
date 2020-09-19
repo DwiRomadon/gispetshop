@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,88 +19,86 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.dwiromadon.myapplication.R;
-import com.dwiromadon.myapplication.admin.HomeAdmin;
+import com.dwiromadon.myapplication.admin.JamBuka;
+import com.dwiromadon.myapplication.admin.Produk;
 import com.dwiromadon.myapplication.pengguna.HomePengguna;
 import com.dwiromadon.myapplication.server.BaseURL;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity {
-
-    LinearLayout skipLogin;
-    Button btnLogin, btnDaftar;
-    EditText edtUserName, edtPassword;
+public class RegistrasiActivity extends AppCompatActivity {
 
     private RequestQueue mRequestQueue;
     ProgressDialog pDialog;
 
+    EditText edtNamaPetshop, edtUsername, edtPassword;
+
+    Button btnRegistrasi, btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_registrasi);
         getSupportActionBar().hide();
 
         mRequestQueue = Volley.newRequestQueue(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        skipLogin = (LinearLayout) findViewById(R.id.skipLogin);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnDaftar = (Button) findViewById(R.id.btnDaftar);
-        edtUserName = (EditText) findViewById(R.id.edtUsername);
+        edtNamaPetshop = (EditText) findViewById(R.id.edtNamaPetshop);
+        edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
-        skipLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, HomePengguna.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
-        btnDaftar.setOnClickListener(new View.OnClickListener() {
+        btnRegistrasi = (Button) findViewById(R.id.btnRegistrasi);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+
+        btnRegistrasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, RegistrasiActivity.class);
-                startActivity(i);
-                finish();
+
+                String namaPet = edtNamaPetshop.getText().toString();
+                String userName = edtUsername.getText().toString();
+                String password = edtPassword.getText().toString();
+
+                try {
+                    JSONObject jsonObj1=null;
+                    jsonObj1=new JSONObject();
+                    jsonObj1.put("namaPetshop", namaPet);
+                    jsonObj1.put("username", userName);
+                    jsonObj1.put("password", password);
+
+                    Log.d("Data = ", jsonObj1.toString());
+                    registrasi(jsonObj1);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = edtUserName.getText().toString();
-                String password = edtPassword.getText().toString();
-                if (userName.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Username Tidak Boleh Kosong",
-                            Toast.LENGTH_LONG).show();
-                }else if (password.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Password Tidak Boleh Kosong",
-                            Toast.LENGTH_LONG).show();
-                }else {
-                    try {
-                        JSONObject jsonObj1=null;
-                        jsonObj1=new JSONObject();
-                        jsonObj1.put("username", userName);
-                        jsonObj1.put("password", password);
-
-                        Log.d("Data = ", jsonObj1.toString());
-                        login(jsonObj1);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                Intent i = new Intent(RegistrasiActivity.this, LoginActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }
 
-    public void login(JSONObject datas){
+    @Override
+    public void onBackPressed(){
+        Intent i = new Intent(RegistrasiActivity.this, LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    public void registrasi(JSONObject datas){
         pDialog.setMessage("Mohon Tunggu .........");
         showDialog();
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BaseURL.login, datas,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, BaseURL.registrasi, datas,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -112,15 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                             boolean status= jsonObject.getBoolean("error");
                             if(status == false){
                                 Toast.makeText(getApplicationContext(), strMsg, Toast.LENGTH_LONG).show();
-                                String data = jsonObject.getString("data");
-                                JSONObject jObjData = new JSONObject(data);
-                                String _id = jObjData.getString("_id");
-                                String namaPetshop = jObjData.getString("namaPetshop");
-                                String username = jObjData.getString("username");
-                                Intent i = new Intent(LoginActivity.this, HomeAdmin.class);
-                                i.putExtra("_id", _id);
-                                i.putExtra("namaPetshop", namaPetshop);
-                                i.putExtra("username", username);
+                                Intent i = new Intent(RegistrasiActivity.this, LoginActivity.class);
                                 startActivity(i);
                                 finish();
                             }else {

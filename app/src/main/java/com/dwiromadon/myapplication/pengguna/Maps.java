@@ -8,10 +8,12 @@ import androidx.core.content.ContextCompat;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,6 +41,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.dwiromadon.myapplication.R;
 import com.dwiromadon.myapplication.adapter.AdapterPenggunaPetshop;
+import com.dwiromadon.myapplication.admin.DataPetshop;
+import com.dwiromadon.myapplication.admin.DetailPetshop;
 import com.dwiromadon.myapplication.model.ModelPetshop;
 import com.dwiromadon.myapplication.server.BaseURL;
 import com.dwiromadon.myapplication.users.LoginActivity;
@@ -75,6 +79,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.vistrav.pop.Pop;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -108,11 +113,14 @@ public class Maps extends AppCompatActivity implements
     ArrayList<ModelPetshop> newsList = new ArrayList<ModelPetshop>();
 
     String radius;
-    Intent i;
+    Intent i, mapIntent;
 
     EditText edtSearch;
     Button btnSearch;
     FloatingActionButton btnRefresh;
+
+    String goolgeMap = "com.google.android.apps.maps"; // identitas package aplikasi google masps android
+    Uri gmmIntentUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +184,7 @@ public class Maps extends AppCompatActivity implements
                 finish();
             }
         });
+
     }
 
     @Override
@@ -188,7 +197,7 @@ public class Maps extends AppCompatActivity implements
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        mapboxMap.setStyle(Style.TRAFFIC_DAY, new Style.OnStyleLoaded() {
+        mapboxMap.setStyle(Style.OUTDOORS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 enableLocationComponent(style);
@@ -377,7 +386,7 @@ public class Maps extends AppCompatActivity implements
                                 final ModelPetshop petShop = new ModelPetshop();
                                 final String _id = jsonObject.getString("_id");
                                 final String namaPetshop = jsonObject.getString("namaPetshop");
-                                final String alamat = jsonObject.getString("alamat");
+//                                final String alamat = jsonObject.getString("alamat");
                                 final String notelp = jsonObject.getString("noTelp");
                                 final String arrGambar = jsonObject.getString("gambar");
                                 final String arrJamBuka = jsonObject.getString("jamBuka");
@@ -388,13 +397,14 @@ public class Maps extends AppCompatActivity implements
                                 final String jarak = jsonObject.getString("jarak");
                                 JSONObject jobjJarak = new JSONObject(jarak);
                                 String jarakDistance = jobjJarak.getString("distance");
-                                String destination = jobjJarak.getString("destination");
+                                final String destination = jobjJarak.getString("destination");
                                 JSONArray arrayGambar = new JSONArray(arrGambar);
                                 final String gambar = arrayGambar.get(0).toString();
                                 markerOptions.setTitle(namaPetshop + " - " + jarakDistance);
                                 markerOptions.setSnippet(destination);
                                 markerOptions.position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
                                 mapboxMap.addMarker(markerOptions);
+                                responseMarker();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -502,6 +512,63 @@ public class Maps extends AppCompatActivity implements
         currentLongitude = location.getLongitude();
 
 //        Toast.makeText(this, currentLatitude + " WORKS " + currentLongitude + "", Toast.LENGTH_LONG).show();
+    }
+
+    public void responseMarker(){
+        mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                marker.hideInfoWindow();
+                double dlat =marker.getPosition().getLatitude();
+                double dlon =marker.getPosition().getLongitude();
+                final String alamat = marker.getSnippet();
+                final String nama = marker.getTitle();
+                final String slat = String.valueOf(dlat);
+                final String slon = String.valueOf(dlon);
+                Pop.on(Maps.this)
+                        .with()
+                        .title("Informasi")
+                        .cancelable(false)
+                        .layout(R.layout.detail_maps)
+                        .when(new Pop.Yah() {
+                            @Override
+                            public void clicked(DialogInterface dialog, View view) {
+
+                            }
+                        })
+                        .show(new Pop.View() { // assign value to view element
+                            @Override
+                            public void prepare(View view) {
+                                EditText edtNamPetsHop = (EditText) view.findViewById(R.id.edtPetshop);
+                                EditText edAlamat = (EditText) view.findViewById(R.id.edtAlamat);
+                                edtNamPetsHop.setText(nama);
+                                edAlamat.setText(alamat);
+
+                                Button goRoutes = (Button) view.findViewById(R.id.goRoutes);
+                                goRoutes.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        gmmIntentUri = Uri.parse("google.navigation:q=" + slat+","+slon);
+
+                                        // Buat Uri dari intent gmmIntentUri. Set action => ACTION_VIEW
+                                        mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+
+                                        // Set package Google Maps untuk tujuan aplikasi yang di Intent yaitu google maps
+                                        mapIntent.setPackage(goolgeMap);
+
+                                        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                                            startActivity(mapIntent);
+                                        } else {
+                                            Toast.makeText(Maps.this, "Google Maps Belum Terinstal. Install Terlebih dahulu.",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                return false;
+            }
+        });
     }
 
 }

@@ -29,7 +29,7 @@ import org.json.JSONObject;
 
 public class Jasa extends AppCompatActivity {
 
-    String _id;
+    String _id, namaPetshop, idUser;
     Intent i;
 
     private RequestQueue mRequestQueue;
@@ -49,13 +49,12 @@ public class Jasa extends AppCompatActivity {
 
         i = getIntent();
         _id = i.getStringExtra("_id");
+        namaPetshop = i.getStringExtra("namaPetshop");
+        idUser = i.getStringExtra("idUser");
 
         mRequestQueue = Volley.newRequestQueue(this);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-
-        i = getIntent();
-        _id = i.getStringExtra("_id");
 
         edtNamaJasa = (EditText) findViewById(R.id.edtNamaJasa);
         edtHargaJasa = (EditText) findViewById(R.id.edtHargaJasa);
@@ -115,6 +114,8 @@ public class Jasa extends AppCompatActivity {
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
                                                 Intent i = new Intent(Jasa.this, HomeAdmin.class);
+                                                i.putExtra("_id", idUser);
+                                                i.putExtra("namaPetshop", namaPetshop);
                                                 startActivity(i);
                                                 finish();
                                             }

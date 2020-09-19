@@ -1,8 +1,11 @@
 package com.dwiromadon.myapplication.pengguna;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dwiromadon.myapplication.R;
+import com.dwiromadon.myapplication.admin.DetailPetshop;
 import com.dwiromadon.myapplication.server.BaseURL;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
@@ -89,19 +93,16 @@ public class DetailPetshopPengguna extends AppCompatActivity {
                 gam.add(BaseURL.baseUrl + "gambar/" + arrayGambar.get(i).toString());
             }
 
-            listJamBuka.add("--Jam Buka--");
             for (int i = 0; i < arrayJamBuka.length(); i++){
                 JSONObject objJamBuka = arrayJamBuka.getJSONObject(i);
                 listJamBuka.add(objJamBuka.getString("hari") + " / " + objJamBuka.getString("jam"));
             }
 
-            listProduk.add("--Produk--");
             for (int i = 0; i < arrayProduk.length(); i++){
                 JSONObject objProduk = arrayProduk.getJSONObject(i);
                 listProduk.add(objProduk.getString("namaProduk") + " / Rp." + objProduk.getString("hargaProduk"));
             }
 
-            listJasa.add("--Jasa--");
             for (int i = 0; i < arrayJasa.length(); i++){
                 JSONObject objJasa = arrayJasa.getJSONObject(i);
                 listJasa.add(objJasa.getString("namaJasa") + " / Rp." + objJasa.getString("hargaJasa"));
@@ -143,6 +144,16 @@ public class DetailPetshopPengguna extends AppCompatActivity {
                     Toast.makeText(DetailPetshopPengguna.this, "Google Maps Belum Terinstal. Install Terlebih dahulu.",
                             Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        edtNoTelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                String temp = "tel:" + noTelp;
+                intent.setData(Uri.parse(temp));
+                startActivity(intent);
             }
         });
     }

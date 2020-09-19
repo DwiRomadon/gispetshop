@@ -61,9 +61,16 @@
             android:drawableLeft="@drawable/ic_address"
             android:layout_marginTop="15dp"
             android:minLines="5"
+            android:focusable="false"
             android:background="@drawable/rounded_edittext"
             android:scrollHorizontally="false"
             android:scrollbars="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#808080"
+            android:text="Alamat akan didaptkan sesuai dengan lokasi anda"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -77,11 +84,14 @@
             android:hint="Nomor Telp"
             android:inputType="textAutoComplete" />
 
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dip"
             android:id="@+id/edtLat"
+            android:focusable="false"
+            android:visibility="gone"
             android:layout_marginTop="15dp"
             android:drawableTint="@color/colorPrimaryDark"
             android:drawableLeft="@drawable/ic_map"
@@ -94,6 +104,8 @@
             android:layout_height="wrap_content"
             android:padding="10dip"
             android:id="@+id/edtLong"
+            android:focusable="false"
+            android:visibility="gone"
             android:layout_marginTop="15dp"
             android:drawableTint="@color/colorPrimaryDark"
             android:drawableLeft="@drawable/ic_map"

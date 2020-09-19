@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login Admin"
+        android:text="Login !"
         android:textSize="18dp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="10dp"
@@ -26,7 +26,7 @@
         android:textStyle="bold"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:orientation="vertical"
         android:background="#F5F5F5"
         android:layout_marginLeft="20dp"
@@ -84,6 +84,15 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/rounded_button"
                     android:textColor="@color/colorPrimary"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Punya Petshop ? Daftar Disini"
+                    android:textAllCaps="false"
+                    android:id="@+id/btnDaftar"
+                    android:background="@null"
+                    android:textColor="@color/colorPrimaryDark"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
