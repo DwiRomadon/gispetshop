@@ -61,7 +61,7 @@ import java.util.Map;
 public class TambahGambar extends AppCompatActivity {
 
     Intent i;
-    String _id;
+    String _id, namaPetshop, alamat, noTelp, gambar, jamBuka, produk, jasa, lat, lon, idUser;
 
     Button takeImg1, btnSubmit;
     ImageView imgChoose1;
@@ -83,6 +83,16 @@ public class TambahGambar extends AppCompatActivity {
 
         i = getIntent();
         _id = i.getStringExtra("_id");
+        namaPetshop = i.getStringExtra("namaPetshop");
+        alamat = i.getStringExtra("alamat");
+        noTelp = i.getStringExtra("noTelp");
+        gambar = i.getStringExtra("gambar");
+        jamBuka = i.getStringExtra("jambuka");
+        produk = i.getStringExtra("produk");
+        jasa = i.getStringExtra("jasa");
+        lat = i.getStringExtra("lat");
+        lon = i.getStringExtra("lon");
+        idUser = i.getStringExtra("idUser");
 
         if (Build.VERSION.SDK_INT >= 24) {
             try {
@@ -358,6 +368,8 @@ public class TambahGambar extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Intent i = new Intent(TambahGambar.this, DataPetshop.class);
+        i.putExtra("namaPetshop", namaPetshop);
+        i.putExtra("idUser", idUser);
         startActivity(i);
         finish();
     }

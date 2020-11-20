@@ -3,6 +3,7 @@ package com.dwiromadon.myapplication.admin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -283,6 +284,7 @@ public class InputData extends AppCompatActivity implements
                 .withPermissions(
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
@@ -440,6 +442,7 @@ public class InputData extends AppCompatActivity implements
      * If connected get lat and long
      *
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onConnected(Bundle bundle) {
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);

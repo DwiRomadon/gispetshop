@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -67,6 +68,9 @@ public class DetailPetshop extends AppCompatActivity {
     FloatingActionButton fabAddGambar;
 
     private RequestQueue mRequestQueue;
+    ProgressDialog pDialog;
+
+    Button btnHapusData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,8 @@ public class DetailPetshop extends AppCompatActivity {
 //        getSupportActionBar().setTitle("Detail Petshop");
         getSupportActionBar().hide();
         mRequestQueue = Volley.newRequestQueue(this);
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
 
         i = getIntent();
         _id = i.getStringExtra("_id");
@@ -94,6 +100,8 @@ public class DetailPetshop extends AppCompatActivity {
         edtPetshop = (EditText) findViewById(R.id.edtPetshop);
         edtAlamat = (EditText) findViewById(R.id.edtAlamat);
         edtNoTelp = (EditText) findViewById(R.id.edtNotelp);
+
+        btnHapusData = (Button) findViewById(R.id.bthHapus);
 
         btnEditNama = (FloatingActionButton) findViewById(R.id.fabButtonEditNama);
         btnEditAlamat = (FloatingActionButton) findViewById(R.id.fabButtonEditAlamat);
@@ -418,6 +426,8 @@ public class DetailPetshop extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(DetailPetshop.this, TambahGambar.class);
                 i.putExtra("_id", _id);
+                i.putExtra("namaPetshop", namaPetshop);
+                i.putExtra("idUser", idUser);
                 startActivity(i);
                 finish();
             }
@@ -432,6 +442,32 @@ public class DetailPetshop extends AppCompatActivity {
 
                 startActivity(i);
                 finish();
+            }
+        });
+
+        btnHapusData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(DetailPetshop.this);
+                builder1.setMessage("Ingin Menghapus Petshop " + namaPetshop + " ?");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton(
+                        "Ya",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                hapusData();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "Tidak",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 
@@ -510,5 +546,52 @@ public class DetailPetshop extends AppCompatActivity {
             }
         });
         mRequestQueue.add(req);
+    }
+
+    public void hapusData(){
+        pDialog.setMessage("Mohon Tunggu .........");
+        showDialog();
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, BaseURL.hapuspetShopById+ _id, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        hideDialog();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.toString());
+                            String strMsg = jsonObject.getString("msg");
+                            boolean status= jsonObject.getBoolean("error");
+                            if(status == false){
+                                Toast.makeText(getApplicationContext(), strMsg, Toast.LENGTH_LONG).show();
+                                Intent a = new Intent(DetailPetshop.this, HomeAdmin.class);
+                                startActivity(a);
+                                finish();
+                            }else {
+                                Toast.makeText(getApplicationContext(), strMsg, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideDialog();
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        });
+        mRequestQueue.add(req);
+    }
+
+
+    private void showDialog(){
+        if(!pDialog.isShowing()){
+            pDialog.show();
+        }
+    }
+
+    private void hideDialog(){
+        if(pDialog.isShowing()){
+            pDialog.dismiss();
+        }
     }
 }

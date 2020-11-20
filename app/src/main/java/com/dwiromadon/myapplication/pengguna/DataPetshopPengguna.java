@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,9 +21,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -72,6 +75,11 @@ public class DataPetshopPengguna extends AppCompatActivity implements
     private RequestQueue mRequestQueue;
 
     EditText edtSearch;
+
+    int socketTimeout = 500000;
+    RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,6 +198,7 @@ public class DataPetshopPengguna extends AppCompatActivity implements
             }
         });
 
+        req.setRetryPolicy(policy);
         /* Add your Requests to the RequestQueue to execute */
         mRequestQueue.add(req);
     }
@@ -236,6 +245,7 @@ public class DataPetshopPengguna extends AppCompatActivity implements
      * If connected get lat and long
      *
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onConnected(Bundle bundle) {
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
